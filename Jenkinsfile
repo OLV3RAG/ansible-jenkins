@@ -1,21 +1,25 @@
 pipeline {
-        agent {
-        label 'dolvera-node'
+    agent any
+
+    options {
+        skipDefaultCheckout(true) // 🔥 ESTO SOLUCIONA TU ERROR
     }
+
     stages {
-        stage('Step 1 - Detect OS') {
+
+        stage('Checkout manual') {
             steps {
                 script {
                     if (isUnix()) {
-                        echo "El nodo está corriendo en Linux/Unix"
+                        sh 'git clone https://github.com/OLV3RAG/ansible-jenkins.git .'
                     } else {
-                        echo "El nodo está corriendo en Windows"
-                    } 
+                        bat 'git clone https://github.com/OLV3RAG/ansible-jenkins.git .'
+                    }
                 }
             }
         }
 
-        stage('Step 2 - Mostrar usuario (whoami)') {
+        stage('Whoami') {
             steps {
                 script {
                     if (isUnix()) {
@@ -27,13 +31,13 @@ pipeline {
             }
         }
 
-        stage('Step 3 - Info adicional') {
+        stage('Test Git') {
             steps {
                 script {
                     if (isUnix()) {
-                        sh 'uname -a'
+                        sh 'git --version'
                     } else {
-                        bat 'ver'
+                        bat 'git --version'
                     }
                 }
             }
