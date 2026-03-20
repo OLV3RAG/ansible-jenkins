@@ -10,7 +10,7 @@ pipeline {
                         echo "El nodo está corriendo en Linux/Unix"
                     } else {
                         echo "El nodo está corriendo en Windows"
-                    }
+                    } 
                 }
             }
         }
