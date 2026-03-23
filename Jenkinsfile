@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'linux' }
+    agent { label 'dolvera-node'}
 
     options {
         skipDefaultCheckout(true)
