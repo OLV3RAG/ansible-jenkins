@@ -1,8 +1,8 @@
 pipeline {
-    agent { label 'dolvera-node' }
+    agent { label 'linux' }
 
     options {
-        skipDefaultCheckout(true) 
+        skipDefaultCheckout(true)
     }
 
     environment {
@@ -12,11 +12,16 @@ pipeline {
 
     stages {
 
+        stage('Limpiar workspace') {
+            steps {
+                deleteDir()
+            }
+        }
+
         stage('Checkout manual') {
             steps {
                 sh '''
                 echo "Clonando repo..."
-                rm -rf *
                 git clone --branch $BRANCH --single-branch $REPO_URL .
                 '''
             }
@@ -28,7 +33,7 @@ pipeline {
                 echo "Usuario:"
                 whoami
 
-                echo "Rama actual:"
+                echo "Rama:"
                 git branch
 
                 echo "Contenido:"
