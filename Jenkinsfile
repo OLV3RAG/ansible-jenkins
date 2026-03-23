@@ -17,6 +17,14 @@ pipeline {
                 deleteDir()
             }
         }
+        stage('Ejecutar Ansible') {
+    steps {
+        sh '''
+        echo "Ejecutando playbook..."
+        ansible-playbook playbook.yml
+        '''
+    }
+}
 
         stage('Checkout manual') {
             steps {

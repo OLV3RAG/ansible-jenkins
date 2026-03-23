@@ -1,0 +1,14 @@
+- name: Test básico de Ansible
+  hosts: localhost
+  connection: local
+
+  tasks:
+    - name: Ejecutar comando echo
+      shell: echo "Hola desde Ansible"
+
+    - name: Ejecutar whoami
+      command: whoami
+
+    - name: Mostrar mensaje debug
+      debug:
+        msg: "Ansible se ejecutó correctamente"
