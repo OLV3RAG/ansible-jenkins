@@ -1,45 +1,39 @@
 pipeline {
-    agent any
+    agent { label 'dolvera-node' }
 
     options {
-        skipDefaultCheckout(true) // 🔥 ESTO SOLUCIONA TU ERROR
+        skipDefaultCheckout(true) 
+    }
+
+    environment {
+        REPO_URL = 'https://github.com/OLV3RAG/ansible-jenkins.git'
+        BRANCH = 'develop'
     }
 
     stages {
 
         stage('Checkout manual') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'git clone https://github.com/OLV3RAG/ansible-jenkins.git .'
-                    } else {
-                        bat 'git clone https://github.com/OLV3RAG/ansible-jenkins.git .'
-                    }
-                }
-            }
-        }  
-
-        stage('Whoami') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh 'whoami'
-                    } else {
-                        bat 'whoami'
-                    }
-                }
+                sh '''
+                echo "Clonando repo..."
+                rm -rf *
+                git clone --branch $BRANCH --single-branch $REPO_URL .
+                '''
             }
         }
 
-        stage('Test Git') {
+        stage('Verificar') {
             steps {
-                script {
-                    if (isUnix()) {
-                        sh 'git --version'
-                    } else {
-                        bat 'git --version'
-                    }
-                }
+                sh '''
+                echo "Usuario:"
+                whoami
+
+                echo "Rama actual:"
+                git branch
+
+                echo "Contenido:"
+                ls -la
+                '''
             }
         }
     }
