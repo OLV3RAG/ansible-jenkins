@@ -72,7 +72,7 @@ pipeline {
             steps {
                 sh '''
                 echo "Ejecutando playbook..."
-                ansible-playbook playbook.yml
+                ansible-playbook playbook.yaml
                 '''
             }
         }
